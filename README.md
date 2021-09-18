@@ -21,7 +21,7 @@ if the example video wasnt enough, it basically generates and stitches frames fo
   -o O         name of output mp4
   ```
 ### why are you doing this
-i dont fucking know
+i dont fucking know, boredom? curiosity?
 
 # look at it
 
