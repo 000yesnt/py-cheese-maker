@@ -23,7 +23,7 @@ if not os.path.exists(args.path):
 if shutil.which("ffmpeg") is None:
     raise Exception("You forgot ffmpeg")
 
-imlist = glob.glob(f"{args.path}/*.png") + glob.glob(f"{args.path}/*.jpg")
+imlist = glob.glob(f"{args.path}/*.png") + glob.glob(f"{args.path}/*.jpg") + glob.glob(f"{args.path}/*.jfif") + glob.glob(f"{args.path}/*.jpeg")
 u = len(imlist)
 if u == 0:
     raise Exception("Input path empty")
