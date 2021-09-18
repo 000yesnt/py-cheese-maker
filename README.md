@@ -13,13 +13,15 @@ if the example video wasnt enough, it basically generates and stitches frames fo
 2. Run main.py and it should Just Work(tm)
 
 ### arguments
-```optional arguments:
-  -h, --help   show this help message and exit
-  --path PATH  path to use as input
-  -s S         string to use at the start, supports formatting ({ln} = amount of files in input)
-  -r R         framerate of output video
-  -o O         name of output mp4
-  ```
+``--path``: path of the input image directory. by default it's the "in" folder. **Images must be jpgs or pngs!**
+
+``-s``: string to use at the first frame. supports formatting: ``{ln}`` for amount of input images. default is ``top {ln} images``
+
+``-r``: framerate of the video. this affects the length of the resulting video, so choose a low value. default 1
+
+``-o``: name of the output mp4. default "result"
+
+``-w`` and ``-h``: width and height of the video. default 256x256
 ### why are you doing this
 i dont fucking know, boredom? curiosity?
 
