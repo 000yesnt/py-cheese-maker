@@ -11,6 +11,7 @@ psr = argparse.ArgumentParser(prog="'Top X Cheese' maker",
                               description="This script generates those funny 'top 50000 cheese' memes that are all over Discord now from input files.")
 
 psr.add_argument('--path', help="path to use as input", type=str, default="in/")
+psr.add_argument('--font', help="font file (.ttf) to use", type=str, default="arial.ttf")
 psr.add_argument('-s', help="string to use at the start, supports formatting ({ln} = amount of files in input)",
                  type=str, default="top {ln} images")
 psr.add_argument('-r', help="framerate of output video, default 1", type=int, default=1)
@@ -31,8 +32,8 @@ if u == 0:
     raise Exception("Input path empty")
 
 FrameOrder = [
-    CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=str(args.s).format(ln=len(imlist))),
-    CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=f"number {u}")
+    CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=str(args.s).format(ln=len(imlist)), font=args.font),
+    CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=f"number {u}", font=args.font)
 ]
 
 print("Making frames")
@@ -40,9 +41,9 @@ for f in imlist:
     FrameOrder.append(CheeseFactory.MakeCheeseFrame(2, (args.w, args.h), imagepath=f))
     u -= 1
     if u == 0:
-        CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=f"thanks for watching")
+        CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=f"thanks for watching", font=args.font)
         break
-    FrameOrder.append(CheeseFactory.MakeCheeseFrame(0, (args.w, args.h), text=f"number {u}"))
+    FrameOrder.append(CheeseFactory.MakeCheeseFrame(0, (args.w, args.h), text=f"number {u}", font=args.font))
 
 print("Writing frames")
 imindex = 0

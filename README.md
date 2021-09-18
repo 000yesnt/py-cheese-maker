@@ -15,6 +15,8 @@ if the example video wasnt enough, it basically generates and stitches frames fo
 ### arguments
 ``--path``: path of the input image directory. by default it's the "in" folder. **Images must be jpgs or pngs!**
 
+``--font``: name of a custom .ttf to use. defaults to Arial.
+
 ``-s``: string to use at the first frame. supports formatting: ``{ln}`` for amount of input images. default is ``top {ln} images``
 
 ``-r``: framerate of the video. this affects the length of the resulting video, so choose a low value. default 1
