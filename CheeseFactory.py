@@ -1,6 +1,5 @@
-from PIL import Image, ImageColor, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 import textwrap
-import os
 
 def MakeCheeseFrame(type:int, size:tuple, **kwargs):
     # TODO: jesus this is ugly
