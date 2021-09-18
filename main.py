@@ -13,8 +13,10 @@ psr = argparse.ArgumentParser(prog="'Top X Cheese' maker",
 psr.add_argument('--path', help="path to use as input", type=str, default="in/")
 psr.add_argument('-s', help="string to use at the start, supports formatting ({ln} = amount of files in input)",
                  type=str, default="top {ln} images")
-psr.add_argument('-r', help="framerate of output video", type=int, default=1)
+psr.add_argument('-r', help="framerate of output video, default 1", type=int, default=1)
 psr.add_argument('-o', help="name of output mp4", type=str, default="result")
+psr.add_argument('-w', help="width of video, default 256", type=int, default=256)
+psr.add_argument('-h', help="height of video, default 256", type=int, default=256)
 
 args = psr.parse_args()
 if not os.path.exists(args.path):
@@ -29,17 +31,18 @@ if u == 0:
     raise Exception("Input path empty")
 
 FrameOrder = [
-    CheeseFactory.MakeCheeseFrame(1, (256, 256), text=str(args.s).format(ln=len(imlist))),
-    CheeseFactory.MakeCheeseFrame(1, (256, 256), text=f"number {u}")
+    CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=str(args.s).format(ln=len(imlist))),
+    CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=f"number {u}")
 ]
 
 print("Making frames")
 for f in imlist:
-    FrameOrder.append(CheeseFactory.MakeCheeseFrame(2, (256, 256), imagepath=f))
+    FrameOrder.append(CheeseFactory.MakeCheeseFrame(2, (args.w, args.h), imagepath=f))
     u -= 1
     if u == 0:
+        CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=f"thanks for watching")
         break
-    FrameOrder.append(CheeseFactory.MakeCheeseFrame(0, (256, 256), text=f"number {u}"))
+    FrameOrder.append(CheeseFactory.MakeCheeseFrame(0, (args.w, args.h), text=f"number {u}"))
 
 print("Writing frames")
 imindex = 0
