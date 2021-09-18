@@ -26,6 +26,9 @@ if shutil.which("ffmpeg") is None:
 
 imlist = glob.glob(f"{args.path}/*.png") + glob.glob(f"{args.path}/*.jpg")
 u = len(imlist)
+if u == 0:
+    raise Exception("Input path empty")
+
 FrameOrder = [
     CheeseFactory.MakeCheeseFrame(1, (256, 256), text=str(args.s).format(ln=len(imlist))),
     CheeseFactory.MakeCheeseFrame(1, (256, 256), text=f"number {u}")
