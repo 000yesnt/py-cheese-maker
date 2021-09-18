@@ -8,25 +8,6 @@ import subprocess
 
 import CheeseFactory
 
-class loglevels: # we'll use this one day
-    warn = "[ \033[93mWARN\033[0m ]"
-    err = "[\033[91mFAILED\033[0m]"
-    ok = "[\033[92m  OK  \033[0m]"
-    f_scroll = ["[\033[91m*     \033[0m]",
-                "[\033[31m*\033[91m*    \033[0m]",
-                "[\033[91m*\033[31m*\033[91m*   \033[0m]",
-                "[ \033[91m*\033[31m*\033[91m*  \033[0m]",
-                "[  \033[91m*\033[31m*\033[91m* \033[0m]",
-                "[   \033[91m*\033[31m*\033[91m*\033[0m]",
-                "[    \033[91m*\033[31m*\033[0m]",
-                "[     \033[91m*\033[0m]",
-                "[    \033[91m*\033[31m*\033[0m]",
-                "[   \033[91m*\033[31m*\033[91m*\033[0m]",
-                "[  \033[91m*\033[31m*\033[91m* \033[0m]",
-                "[ \033[91m*\033[31m*\033[91m*  \033[0m]",
-                "[\033[91m*\033[31m*\033[91m*   \033[0m]",
-                "[\033[31m*\033[91m*    \033[0m]"]
-
 psr = argparse.ArgumentParser(prog="'Top X Cheese' maker",
                               description="This script generates those funny 'top 50000 cheese' memes that are all over Discord now from input files.")
 
