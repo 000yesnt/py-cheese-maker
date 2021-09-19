@@ -23,7 +23,7 @@ if the example video wasnt enough, it basically generates and stitches frames fo
 
 ``-o``: name of the output mp4. default "result"
 
-``-w`` and ``-h``: width and height of the video. default 256x256
+``--width`` and ``--height``: width and height of the video. default 256x256
 ### why are you doing this
 i dont fucking know, boredom? curiosity?
 

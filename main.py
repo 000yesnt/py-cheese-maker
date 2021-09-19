@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-import shutil
+from shutil import which
 import argparse
-import glob
+from glob import glob
 import os
-import subprocess
+from subprocess import run as cmd
 
-import CheeseFactory
+from CheeseFactory import MakeCheeseFrame
+import coolstuff
 
 psr = argparse.ArgumentParser(prog="'Top X Cheese' maker",
                               description="This script generates those funny 'top 50000 cheese' memes that are all over Discord now from input files.")
@@ -16,46 +17,48 @@ psr.add_argument('-s', help="string to use at the start, supports formatting ({l
                  type=str, default="top {ln} images")
 psr.add_argument('-r', help="framerate of output video, default 1", type=int, default=1)
 psr.add_argument('-o', help="name of output mp4", type=str, default="result")
-psr.add_argument('-w', help="width of video, default 256", type=int, default=256)
-psr.add_argument('-h', help="height of video, default 256", type=int, default=256)
+psr.add_argument('--width', help="width of video, default 256", type=int, default=256)
+psr.add_argument('--height', help="height of video, default 256", type=int, default=256)
 
 args = psr.parse_args()
 if not os.path.exists(args.path):
-    raise Exception("Path does not exist")
+    coolstuff.Msg(coolstuff.levels.ERROR, "Path does not exist")
+    exit(1)
 
-if shutil.which("ffmpeg") is None:
-    raise Exception("You forgot ffmpeg")
+if which("ffmpeg") is None:
+    coolstuff.Msg(coolstuff.levels.ERROR, "FFmpeg is not installed or configured correctly!\nYou can get binaries here: https://ffmpeg.org/download.html")
+    exit(1)
 
-imlist = glob.glob(f"{args.path}/*.png") + glob.glob(f"{args.path}/*.jpg") + glob.glob(f"{args.path}/*.jfif") + glob.glob(f"{args.path}/*.jpeg")
+imlist = glob(f"{args.path}/*.png") + glob(f"{args.path}/*.jpg") + glob(f"{args.path}/*.jfif") + glob(f"{args.path}/*.jpeg")
 u = len(imlist)
 if u == 0:
-    raise Exception("Input path empty")
+    coolstuff.Msg(coolstuff.levels.ERROR, "Input path is empty!")
+    exit(1)
 
 FrameOrder = [
-    CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=str(args.s).format(ln=len(imlist)), font=args.font),
-    CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=f"number {u}", font=args.font)
+    MakeCheeseFrame(1, (args.width, args.height), text=str(args.s).format(ln=len(imlist)), font=args.font),
+    MakeCheeseFrame(1, (args.width, args.height), text=f"number {u}", font=args.font)
 ]
 
-print("Making frames")
+coolstuff.MakeAnimatedMsgThread("Making frames", 0.3)
 for f in imlist:
-    FrameOrder.append(CheeseFactory.MakeCheeseFrame(2, (args.w, args.h), imagepath=f))
+    FrameOrder.append(MakeCheeseFrame(2, (args.width, args.height), imagepath=f))
     u -= 1
     if u == 0:
-        CheeseFactory.MakeCheeseFrame(1, (args.w, args.h), text=f"thanks for watching", font=args.font)
+        MakeCheeseFrame(1, (args.width, args.height), text=f"thanks for watching", font=args.font)
         break
-    FrameOrder.append(CheeseFactory.MakeCheeseFrame(0, (args.w, args.h), text=f"number {u}", font=args.font))
-
-print("Writing frames")
+    FrameOrder.append(MakeCheeseFrame(0, (args.width, args.height), text=f"number {u}", font=args.font))
+coolstuff.MakeAnimatedMsgThread("Writing frames", 0.3)
 imindex = 0
 for img in FrameOrder:
     img.save(f"out/imindex{imindex}.png")
     imindex += 1
 
-print("Processing with ffmpeg")
-subprocess.run(["ffmpeg", "-hide_banner", "-framerate", str(args.r), "-y", "-i", "out/imindex%d.png", "-c", "libx264", f"out/{args.o}.mp4"], capture_output=True)
-print("Cleaning up")
+coolstuff.MakeAnimatedMsgThread("Processing with ffmpeg", 0.3)
+cmd(["ffmpeg", "-hide_banner", "-framerate", str(args.r), "-y", "-i", "out/imindex%d.png", "-c", "libx264", f"out/{args.o}.mp4"], capture_output=True)
+coolstuff.KillAnimatedMsgThread(coolstuff.levels.BLANK, "Cleaning up")
 
-tg = glob.glob(f"out/*.png")
+tg = glob(f"out/*.png")
 for g in tg:
     os.remove(g)
 
