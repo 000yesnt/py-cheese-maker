@@ -54,7 +54,7 @@ for img in FrameOrder:
     img.save(f"out/imindex{imindex}.png")
     imindex += 1
 
-coolstuff.MakeAnimatedMsgThread("Processing with ffmpeg", 0.3)
+coolstuff.MakeAnimatedMsgThread("Processing...", 0.3)
 cmd(["ffmpeg", "-hide_banner", "-framerate", str(args.r), "-y", "-i", "out/imindex%d.png", "-c", "libx264", f"out/{args.o}.mp4"], capture_output=True)
 coolstuff.KillAnimatedMsgThread(coolstuff.levels.BLANK, "Cleaning up")
 
