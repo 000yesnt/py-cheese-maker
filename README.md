@@ -5,8 +5,8 @@
 if the example video wasnt enough, it basically generates and stitches frames for a slideshow/compilation video using PIL and FFmpeg.
 
 ### how to use
-1. Make sure you have FFmpeg, Python and necessary modules.
-
+1. Make sure you have FFmpeg, Python and the Pillow module. I've included scripts that should get the requirements automatically.
+   
    Windows: double click the setup.bat
 
    Linux: ``chmod +x setup.sh && ./setup.sh`` (or just double click the setup script)

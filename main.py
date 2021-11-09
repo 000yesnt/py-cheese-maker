@@ -5,7 +5,8 @@ from glob import glob
 import os
 from subprocess import run as cmd
 
-from CheeseFactory import MakeCheeseFrame
+from CheeseFactory import makeCheeseFrame
+from CheeseFactory import FrameTypes as ft
 import coolstuff
 
 psr = argparse.ArgumentParser(prog="'Top X Cheese' maker",
@@ -36,18 +37,19 @@ if u == 0:
     exit(1)
 
 FrameOrder = [
-    MakeCheeseFrame(1, (args.width, args.height), text=str(args.s).format(ln=len(imlist)), font=args.font),
-    MakeCheeseFrame(1, (args.width, args.height), text=f"number {u}", font=args.font)
+    makeCheeseFrame(ft.FT_TEXT_LARGE, (args.width, args.height), text=str(args.s).format(ln=len(imlist)), font=args.font),
+    makeCheeseFrame(ft.FT_TEXT_LARGE, (args.width, args.height), text=f"number {u}", font=args.font)
 ]
 
 coolstuff.MakeAnimatedMsgThread("Making frames", 0.3)
 for f in imlist:
-    FrameOrder.append(MakeCheeseFrame(2, (args.width, args.height), imagepath=f))
+    FrameOrder.append(makeCheeseFrame(ft.FT_IMAGE, (args.width, args.height), imagepath=f))
     u -= 1
     if u == 0:
-        MakeCheeseFrame(1, (args.width, args.height), text=f"thanks for watching", font=args.font)
+        makeCheeseFrame(1, (args.width, args.height), text=f"thanks for watching", font=args.font)
         break
-    FrameOrder.append(MakeCheeseFrame(0, (args.width, args.height), text=f"number {u}", font=args.font))
+    FrameOrder.append(makeCheeseFrame(ft.FT_TEXT_SMALL, (args.width, args.height), text=f"number {u}", font=args.font))
+
 coolstuff.MakeAnimatedMsgThread("Writing frames", 0.3)
 imindex = 0
 for img in FrameOrder:
